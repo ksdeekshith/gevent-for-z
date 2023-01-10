@@ -1,2 +1,2 @@
 # gevent-for-z
-this is for gevent support of IBMZ
+s390x build for gRPC
