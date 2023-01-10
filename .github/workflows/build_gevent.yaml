@@ -84,6 +84,7 @@ jobs:
         # forever. Likewise, don't build or even configure c-ares; in the emulated platform
         # it takes at least 15 minutes and often much longer.
         env:
+          DOCKER_IMAGE: quay.io/pypa/manylinux2014_s390x
           GEVENTTEST_SKIP_ALL: 1
           GEVENTSETUP_DISABLE_ARES: 1
         run: |
