@@ -1,0 +1,41 @@
+name: Check for new gevent release
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  check-release:
+    runs-on: ubuntu-20.04
+    
+    outputs:
+      latest-release: ${{ steps.latest.outputs.LATEST_RELEASE }}
+      current-release: ${{ steps.current.outputs.CURRENT_RELEASE }}
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Get latest gevent release
+        id: latest
+        run: |
+          sudo apt-get update -y
+          sudo apt-get install -y curl jq
+          
+          GRPC_LATEST=$(curl -s https://pypi.org/pypi/gevent/json | jq -r '.info.version')
+          echo '::set-output name=LATEST_RELEASE::'$GEVENT_LATEST
+          echo "Latest Grpc version: $GEVENT_LATEST"
+          
+      - name: Get current gevent release for s390x
+        id: current
+        run: |
+          GRPC_CURRENT=$(curl -s https://api.github.com/repos/IBM/gevent-for-Z/releases/latest | grep tag_name | cut -d '"' -f4)
+          echo '::set-output name=CURRENT_RELEASE::'$GEVENT_CURRENT
+          echo "Current Grpc version on IBMZ: $GEVENT_CURRENT"
+          
+  build-new-release:
+    needs: [check-release]
+    if: ${{ needs.check-release.outputs.latest-release }} != ${{ needs.check-release.outputs.current-release }}
+    uses: ./.github/workflows/build_gevent.yaml
+    with:
+      release: 1.47.0
