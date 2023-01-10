@@ -40,8 +40,8 @@ jobs:
             echo "Building gevent ${{ inputs.release }}"
             python3.9 -m pip install gevent==$((inputs.release }}
             
-            WHEEL_PATH=$(find /root/.cache/pip/wheels/ -name "grpcio*.whl")
-            WHEEL_NAME=$(basename $(find /root/.cache/pip/wheels/ -name "grpcio*.whl"))
+            WHEEL_PATH=$(find /root/.cache/pip/wheels/ -name "gevent*.whl")
+            WHEEL_NAME=$(basename $(find /root/.cache/pip/wheels/ -name "gevent*.whl"))
             echo $WHEEL_PATH
             echo $WHEEL_NAME
             cp $WHEEL_PATH /artifacts/$WHEEL_NAME
