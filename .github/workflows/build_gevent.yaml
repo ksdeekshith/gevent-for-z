@@ -35,7 +35,7 @@ jobs:
             add-apt-repository ppa:deadsnakes/ppa -y
             apt-get install python3.9 python3-pip python3-dev libpython3.9-dev -y
             python3.9 -m pip install --upgrade pip
-            apt-get install libevent-dev
+            apt-get -y install libevent-dev
             python3.9 -m pip install greenlet==1.1.2
             #Building gevent
             echo "Building gevent ${{ inputs.release }}"
