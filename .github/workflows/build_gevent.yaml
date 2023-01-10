@@ -76,13 +76,12 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Update pip
         run: pip install -U pip
-      - name: Enable emulation
-        run: |
-          docker run --rm --privileged hypriot/qemu-register
-      - name: Build and test gevent
-        # Skip the bulk of the tests, running them emulated on arm takes
-        # forever. Likewise, don't build or even configure c-ares; in the emulated platform
-        # it takes at least 15 minutes and often much longer.
+      - uses: uraimo/run-on-arch-action@v2.2.0
+        name: build gevent
+        id: build
+        with:
+          arch: s390x
+          distro: ubuntu20.04
         env:
           DOCKER_IMAGE: quay.io/pypa/manylinux2014_s390x
           GEVENTTEST_SKIP_ALL: 1
