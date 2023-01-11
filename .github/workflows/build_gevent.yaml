@@ -76,22 +76,17 @@ jobs:
             ${{ runner.os }}-pip-
       - name: Update pip
         run: pip install -U pip
-      - uses: uraimo/run-on-arch-action@v2.2.0
-        name: build gevent
-        id: build
-        with:
-          arch: s390x
-          distro: ubuntu20.04
-          env: |
-            DOCKER_IMAGE: quay.io/pypa/manylinux2014_s390x
-            GEVENTTEST_SKIP_ALL: 1
-            GEVENTSETUP_DISABLE_ARES: 1
-          run: |
-            cd gevent
-            git checkout tags/${{ inputs.release }}
-            chmod +x scripts/releases/make-manylinux
-            ./scripts/releases/make-manylinux
-            tar -zcvf manylinux_s390x_wheels_${{ inputs.release }}.tar.gz wheelhouse/
+      - name: Build and test gevent
+        env:
+          DOCKER_IMAGE: quay.io/pypa/manylinux2014_s390x
+          GEVENTTEST_SKIP_ALL: 1
+          GEVENTSETUP_DISABLE_ARES: 1
+        run: |
+          cd gevent
+          git checkout tags/${{ inputs.release }}
+          chmod +x scripts/releases/make-manylinux
+          ./scripts/releases/make-manylinux
+          tar -zcvf manylinux_ppc64le_wheels_${{ inputs.release }}.tar.gz wheelhouse/
                       
       - name: Create Release
         id: create_release
