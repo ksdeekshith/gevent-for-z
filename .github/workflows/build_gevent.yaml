@@ -79,6 +79,8 @@ jobs:
       - name: Install qemu emulator
         run: |
           docker run --privileged --rm tonistiigi/binfmt --install s390x
+      - name: Install greenlet
+        run: pip install greenlet==1.1.2
       - name: Build and test gevent
         env:
           DOCKER_IMAGE: quay.io/pypa/manylinux2014_s390x
