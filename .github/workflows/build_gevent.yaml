@@ -40,22 +40,22 @@ jobs:
             chmod +x ./build.sh 
             source ./build.sh ${{ inputs.release }}
             
-#            WHEEL_PATH=$(find /root/.cache/pip/wheels/ -name "grpcio*.whl")
-#            WHEEL_NAME=$(basename $(find /root/.cache/pip/wheels/ -name "grpcio*.whl"))
-#            echo $WHEEL_PATH
-#            echo $WHEEL_NAME
-#            cp $WHEEL_PATH /artifacts/$WHEEL_NAME
-#            ls /artifacts/            
+            WHEEL_PATH=$(find /root/.cache/pip/wheels/ -name "gevent*.whl")   
+            WHEEL_NAME=$(basename $(find /root/.cache/pip/wheels/ -name "gevent*.whl"))
+            echo $WHEEL_PATH
+            echo $WHEEL_NAME
+            cp $WHEEL_PATH /artifacts/$WHEEL_NAME
+            ls /artifacts/ 
                       
-#      - name: Create Release
-#        id: create_release
-#        uses: ncipollo/release-action@v1
-#        with:
-#          tag: ${{ inputs.release }}
-#          token: ${{ secrets.GITHUB_TOKEN }}
-#          allowUpdates: true
-#          artifacts: ./artifacts/grpcio-${{ inputs.release }}-cp39-cp39-linux_s390x.whl
-#          name: ${{ inputs.release }}
-#          replacesArtifacts: true
-#          draft: false
-#          prerelease: false
+      - name: Create Release
+        id: create_release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ inputs.release }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          allowUpdates: true
+          artifacts: ./artifacts/gevent-${{ inputs.release }}-cp39-cp39-linux_s390x.whl
+          name: ${{ inputs.release }}
+          replacesArtifacts: true
+          draft: false
+          prerelease: false
